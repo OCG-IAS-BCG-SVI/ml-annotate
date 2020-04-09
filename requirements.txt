@@ -9,7 +9,7 @@ SQLAlchemy==1.1.12
 sh==1.12.14
 alembic==0.9.4
 gunicorn==19.7.1
-flask-shell-ipython
+flask-shell-ipython==0.3.1
 passlib==1.7.1
 Flask-WTF==0.12
 Flask-Assets==0.12
