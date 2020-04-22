@@ -1,11 +1,11 @@
 from itertools import groupby
 
 from flask import flash, render_template, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from annotator.app import app
 from annotator.extensions import db
-from annotator.models import Dataset, LabelEvent, Problem, ProblemLabel
+from annotator.models import Dataset, LabelEvent, Problem, ProblemLabel, User
 from annotator.utils import assert_rights_to_problem
 
 
@@ -101,7 +101,8 @@ def train(problem_id):
                             'no': False,
                             'skip': None
                         }[value],
-                        data=Dataset.query.get(request.form['data_id'])
+                        data=Dataset.query.get(request.form['data_id']),
+                        created_by=current_user.username
                     )
                     db.session.add(label_event)
                     db.session.commit()
