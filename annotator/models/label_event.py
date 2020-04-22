@@ -44,5 +44,10 @@ class LabelEvent(db.Model):
         nullable=False
     )
 
+    created_by = db.Column(
+        db.Unicode(255),
+        nullable=False,
+    )
+    
     def __repr__(self):
         return '<LabelEvent label=%r>' % self.label
