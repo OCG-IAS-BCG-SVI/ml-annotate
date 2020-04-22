@@ -114,7 +114,6 @@ def import_atom():
                 ProblemLabel(label='Risk Negative', order_index=3),
                 ProblemLabel(label='Control Positive', order_index=4),
                 ProblemLabel(label='Control Neutral', order_index=5),
-                ProblemLabel(label='Control Negative', order_index=6),
             ]
     # supported types: binary, multi-label, multi-class
     # add more labels if using other labels.
