@@ -73,6 +73,61 @@ def import_fake_data():
     db.session.commit()
     print('Inserted %i quotes' % len(quotes))
 
+@app.cli.command()
+def import_pride():
+    import requests
+    request = requests.get('https://www.gutenberg.org/files/1342/1342-0.txt')
+    text_contents = max(request.text.split('***'), key=lambda x: len(x))
+    paragraphs = [
+        x.strip() for x in text_contents.replace('\r', '').split('\n\n')
+        if x.strip()
+    ]
+    new_problem = Problem(
+        name='Example',
+        labels=[ProblemLabel(label='Example', order_index=1)],
+        # supported types: binary, multi-label, multi-class
+        # add more labels if using other labels.
+        classification_type='binary'
+    )
+    for i, paragraph in enumerate(paragraphs):
+        db.session.add(Dataset(
+            table_name='gutenberg.pride_and_prejudice_by_jane_austen',
+            entity_id='paragraph%i' % i,
+            problem=new_problem,
+            free_text=paragraph
+        ))
+    db.session.commit()
+
+@app.cli.command()
+def import_atom():
+    import csv
+    from csv import reader
+    with open('atom-risk.csv', 'r') as read_obj:
+        csv_reader = reader(read_obj)
+
+        new_problem = Problem(
+            name='ATOM_reports',
+            classification_type='multi-label',
+            labels=[
+                ProblemLabel(label='Risk Positive', order_index=1),
+                ProblemLabel(label='Risk Neutral', order_index=2),
+                ProblemLabel(label='Risk Negative', order_index=3),
+                ProblemLabel(label='Control Positive', order_index=4),
+                ProblemLabel(label='Control Neutral', order_index=5),
+                ProblemLabel(label='Control Negative', order_index=6),
+            ]
+    # supported types: binary, multi-label, multi-class
+    # add more labels if using other labels.
+        )
+        for row in csv_reader:
+            db.session.add(Dataset(
+                table_name='ATOM_risk',
+                entity_id=row[0],
+                problem=new_problem,
+                free_text=row[2]
+            ))
+    db.session.commit()
+    print('Inserted CSV risk statements')
 
 @app.cli.command()
 def createtables():
