@@ -51,7 +51,7 @@ body {
   opacity: 0.5;
 }
 .buttons .button-yes, .color-yes {
-  background-color: #27ae60;
+  background-color: #0e7b3c;
 }
 .buttons .button-no, .color-no {
   background-color: #c0392b;
@@ -66,16 +66,19 @@ body {
   background-color: #0e7b3c;
 }
 .buttons .color-2, .color-2 {
-  background-color: #2980b9;
+  background-color: #005172;
 }
 .buttons .color-3, .color-3 {
-  background-color: #8e44ad;
+  background-color: #CD202C;
 }
 .buttons .color-4, .color-4 {
-  background-color: #d35400;
+  background-color: #F5BE18;
 }
 .buttons .color-5, .color-5 {
-  background-color: #2c3e50;
+  background-color: #63CECA;
+}
+.buttons .color-6, .color-6 {
+  background-color: #37424A;
 }
 .font-color-0 {
   color: rgb(72, 130, 133);
@@ -84,16 +87,19 @@ body {
   color: #0e7b3c;
 }
 .font-color-2 {
-  color: #2980b9;
+  color: #005172;
 }
 .font-color-3 {
-  color: #8e44ad;
+  color: #CD202C;
 }
 .font-color-4 {
-  color: #d35400;
+  color: #F5BE18;
 }
 .font-color-5 {
-  color: #2c3e50;
+  color: #63CECA;
+}
+.font-color-6 {
+  color: #37424A;
 }
 .multi-label {
   .table th {
@@ -113,7 +119,7 @@ body {
     }
   }
   .button {
-    background-color: #95a5a6;
+    background-color: #7f8c8d;
     width: 100%;
     text-align: center;
     color: white;
@@ -180,7 +186,10 @@ html {
   font-weight: 700;
 }
 .dark-page {
-  background-image: linear-gradient(-20deg, #293562 0%, #03808A 100%);
+  background-image: url('../images/atom-back.png'), linear-gradient(-20deg, #293562 0%, #03808A 100%);
+  background-size:     cover;                      /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center;              /* optional, center the image */
   width: 100%;
   height: 100%;
   display: grid;
@@ -222,8 +231,18 @@ html {
 }
 .alert {
   position: absolute;
+  background-color: #F5BE18;
   top: 10px;
   left: 10px;
+}
+.alert-info {
+  color: #FFFFFF;
+  background-color: #d9edf7;
+  border-color: #bce8f1; 
+}
+.alert-info {
+  background-image: linear-gradient(-20deg, #293562 0%,  #03808A 100%);
+  border-color: #9acfea; 
 }
 .btn-small {
   padding: 4px 8px;
