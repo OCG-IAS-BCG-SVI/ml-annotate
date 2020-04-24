@@ -99,34 +99,85 @@ def import_pride():
     db.session.commit()
 
 @app.cli.command()
-def import_atom():
+def import_atom_ml():
     import csv
     from csv import reader
     with open('atom-risk.csv', 'r') as read_obj:
         csv_reader = reader(read_obj)
 
         new_problem = Problem(
-            name='ATOM_reports',
+            name='Level 3 Risks & Controls',
             classification_type='multi-label',
             labels=[
                 ProblemLabel(label='Risk Positive', order_index=1),
-                ProblemLabel(label='Risk Neutral', order_index=2),
-                ProblemLabel(label='Risk Negative', order_index=3),
-                ProblemLabel(label='Control Positive', order_index=4),
-                ProblemLabel(label='Control Neutral', order_index=5),
+                ProblemLabel(label='Risk Negative', order_index=2),
+                ProblemLabel(label='Control Positive', order_index=3),
+                ProblemLabel(label='Control Negative', order_index=4),
+                ProblemLabel(label='Not a SoI', order_index=5),
             ]
     # supported types: binary, multi-label, multi-class
     # add more labels if using other labels.
         )
         for row in csv_reader:
             db.session.add(Dataset(
-                table_name='ATOM_risk',
+                table_name=row[1],
                 entity_id=row[0],
                 problem=new_problem,
                 free_text=row[2]
             ))
     db.session.commit()
-    print('Inserted CSV risk statements')
+    print('Inserted multi-label statements')
+
+@app.cli.command()
+def import_atom_mc():
+    import csv
+    from csv import reader
+    with open('atom-risk.csv', 'r') as read_obj:
+        csv_reader = reader(read_obj)
+
+        new_problem = Problem(
+            name='Level 2 SoI Sentiment',
+            classification_type='multi-class',
+            labels=[
+                ProblemLabel(label='SoI Positive', order_index=1),
+                ProblemLabel(label='SoI Negative', order_index=2),
+                ProblemLabel(label='Not a SoI', order_index=3),
+            ]
+    # supported types: binary, multi-label, multi-class
+    # add more labels if using other labels.
+        )
+        for row in csv_reader:
+            db.session.add(Dataset(
+                table_name=row[1],
+                entity_id=row[0],
+                problem=new_problem,
+                free_text=row[2]
+            ))
+    db.session.commit()
+    print('Inserted multi-class statements')
+
+@app.cli.command()
+def import_atom_b():
+    import csv
+    from csv import reader
+    with open('atom-risk.csv', 'r') as read_obj:
+        csv_reader = reader(read_obj)
+
+        new_problem = Problem(
+            name='Level 1 Statement of Interest',
+            labels=[ProblemLabel(label='Statement of Interest', order_index=1)]
+    # supported types: binary, multi-label, multi-class
+    # add more labels if using other labels.
+        )
+        for row in csv_reader:
+            db.session.add(Dataset(
+                table_name=row[1],
+                entity_id=row[0],
+                problem=new_problem,
+                free_text=row[2]
+            ))
+    db.session.commit()
+    print('Inserted binary statements')
 
 @app.cli.command()
 def createtables():
