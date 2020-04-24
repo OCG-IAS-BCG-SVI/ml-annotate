@@ -61,8 +61,8 @@ class MultiLabelSelector extends React.Component {
 
         <h3>{
           {
-            'multi-label': 'Choose multiple labels',
-            'multi-class': 'Choose a single label'
+            'multi-label': 'Choose label(s) then click Label, or click Label to skip',
+            'multi-class': 'Choose a single label (enter to skip)'
           }[this.props.config.classification_type]
         }</h3>
         <div className="labels">
@@ -77,7 +77,7 @@ class MultiLabelSelector extends React.Component {
         { this.props.config.classification_type === 'multi-label' ? (
           <button type="submit" className="button">Label</button>
         ) : (
-          <button type="submit" className="button button-no-category">No category (enter)</button>
+          <button type="submit" className="button button-no-category">Skip (enter)</button>
         )}
       </form>
     </div>;
