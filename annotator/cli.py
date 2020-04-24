@@ -6,7 +6,7 @@ from sh import createdb, dropdb, psql
 
 from .app import app
 from .extensions import db
-from .models import Dataset, Problem, ProblemLabel, User
+from .models import Dataset, Problem, ProblemLabel, User, UserProblem
 
 
 @app.cli.command()
@@ -21,6 +21,17 @@ def add_user(username, password):
     db.session.commit()
     click.echo('User %s added' % username)
 
+@app.cli.command()
+@click.argument('username')
+@click.argument('password')
+def normal_user(username, password):
+    u = User(username=username, password=password)
+    db.session.add(u)
+    db.session.add(UserProblem(user=u, problem=Problem.query.get('a5145ad0-9a66-4902-8f61-94374c88e2b6')))
+    db.session.add(UserProblem(user=u, problem=Problem.query.get('7401c701-4d24-470c-816e-2b89a87abd42')))
+    db.session.add(UserProblem(user=u, problem=Problem.query.get('86d366ad-2ac2-45a4-b288-89c23fa3df0b')))
+    db.session.commit()
+    click.echo('Normal User %s added' % username)
 
 @app.cli.command()
 def import_fake_data():
