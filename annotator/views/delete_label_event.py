@@ -1,9 +1,9 @@
 from flask import flash, redirect, request, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from annotator import app
 from annotator.extensions import db
-from annotator.models import Dataset, LabelEvent, ProblemLabel
+from annotator.models import Dataset, LabelEvent, ProblemLabel, Problem
 from annotator.utils import assert_rights_to_problem
 
 
@@ -26,6 +26,7 @@ def multi_class_delete_label_event(problem_id, data_id):
         db.session.add(LabelEvent(
             data=data,
             label=label,
+            created_by=current_user.username,
             label_matches=True if label == selected_label else None
         ))
     db.session.commit()
@@ -51,6 +52,7 @@ def delete_label_event(problem_id, id):
             db.session.add(LabelEvent(
                 data=label_event.data,
                 label=label_event.label,
+                created_by=current_user.username,
                 label_matches={
                     'true': True,
                     'false': False,
