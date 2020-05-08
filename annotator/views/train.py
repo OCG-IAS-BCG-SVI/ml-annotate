@@ -72,7 +72,6 @@ def train_log(problem_id):
         ]
     )
 
-
 @app.route('/<uuid:problem_id>/train', methods=['GET', 'POST'])
 @login_required
 def train(problem_id):
